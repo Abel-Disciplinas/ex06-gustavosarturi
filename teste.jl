@@ -6,9 +6,10 @@ include("integral.jl")
 function teste()
     # Simpson com ϵ
     k = 1
-    for (f, a, b, Iexato, M) in [(x -> exp(4x), 0, 2, (exp(8) - 1)/4, 4^4 * exp(8))
-                                 # Outras (f, a, b, Iexato, M)
-                                ]
+    for (f, a, b, Iexato, M) in [(x -> exp(4x), 0, 2, (exp(8) - 1)/4, 4^4 * exp(8)),
+                                 (x -> sin(x), 0, π, (exp(8) - 1)/4, 4^4 * exp(8)),
+                                 (x -> cos(x), 0, π/4, (exp(8) - 1)/4, 4^4 * exp(8)),
+                                 (x -> log(x), 1, e, (exp(8) - 1)/4, 4^4 * exp(8))]
         @testset "Função $k" begin
             @test abs(Iexato - simpsoneps(f, a, b, 1e-8, M=M)) < 1e-8
             @test abs(Iexato - simpson_adaptivo(f, a, b, 1e-8)) < 1e-8
